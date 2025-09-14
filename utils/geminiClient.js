@@ -72,3 +72,20 @@ Generate the response now.
     throw error;
   }
 }
+
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+
+export async function getGeminiEmbedding(text) {
+  try {
+    const response = await ai.models.embedContent({
+      model: "gemini-embedding-001",
+      contents: text,
+    });
+    return response.embeddings;
+  } catch (error) {
+    console.error("Gemini Embedding API error:", error);
+    throw error;
+  }
+}

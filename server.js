@@ -7,6 +7,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is healthy' });
+});
+
 app.use('/api/repos', repoRoutes); // Routes mounted under /api/repos
 
 app.use(errorHandler); // Global error handler middleware

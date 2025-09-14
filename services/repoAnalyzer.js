@@ -5,6 +5,7 @@ import simpleGit from 'simple-git';
 import pLimit from 'p-limit';
 import os from 'os';
 import { extractCodeBlocks } from '../utils/extractCodeBlocks'; // We’ll implement this next
+import { getGeminiEmbedding } from '../utils/geminiClient'; // We’ll implement this next
 
 async function generateEmbedding(text) {
   const EMBEDDING_API_URL = process.env.EMBEDDING_API_URL || 'http://127.0.0.1:5000';
@@ -63,7 +64,7 @@ export async function analyzeRepoService(req, res, next) {
       allBlocks.map(block =>
         limit(async () => ({
           ...block,
-          embedding: await generateEmbedding(block.content),
+          embedding: await getGeminiEmbedding(block.content),
         }))
       )
     );

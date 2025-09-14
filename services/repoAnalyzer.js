@@ -7,7 +7,8 @@ import os from 'os';
 import { extractCodeBlocks } from '../utils/extractCodeBlocks'; // We’ll implement this next
 
 async function generateEmbedding(text) {
-  const response = await axios.post('http://127.0.0.1:5000/embed', { text });
+  const EMBEDDING_API_URL = process.env.EMBEDDING_API_URL || 'http://127.0.0.1:5000';
+  const response = await axios.post(`${EMBEDDING_API_URL}/embed`, { text });
   return response.data.embedding;
 }
 

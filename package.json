@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/CodenceAI/backend-service#readme",
   "dependencies": {
+    "@google/genai": "^1.19.0",
+    "@google/generative-ai": "^0.24.1",
     "axios": "^1.12.1",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

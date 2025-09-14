@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { getEmbeddingForQuery } from '../utils/embeddingClient'; // We’ll implement this next
 import { cosineSimilarity } from '../utils/cosineSimilarity'; // We’ll implement this next
+import { askGemini } from '../utils/geminiClient'; // We’ll implement this next
 
 export async function searchRepoService(req, res, next) {
   try {
@@ -19,7 +20,7 @@ export async function searchRepoService(req, res, next) {
     const analysisRaw = fs.readFileSync(analysisPath, 'utf-8');
     const analysis = JSON.parse(analysisRaw);
 
-    // Step 5: Get query embedding (placeholder)
+    // Step 5: Get query embedding
     const queryEmbedding = await getEmbeddingForQuery(query);
 
     // Step 6: Compute cosine similarities
@@ -31,14 +32,19 @@ export async function searchRepoService(req, res, next) {
       return { ...rest, score };
     });
 
-    scoredBlocks.sort((a, b) => b.score - a.score);
+    const topMatches = scoredBlocks.slice(0, 5);
 
+  // Step 7: Get AI explanation from Gemini
+    const explanation = await askGemini(query, topMatches);
+
+  // Step 8: Return response
     res.json({
-      repoName,
-      query,
-      topMatches: scoredBlocks.slice(0, 5),
+        repoName,
+        query,
+        explanation,
     });
-  } catch (err) {
+
+    } catch (err) {
     next(err);
-  }
+    }
 };

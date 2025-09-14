@@ -11,4 +11,4 @@ deployment
   --platform managed \
   --region asia-south1 \
   --allow-unauthenticated \
-  --set-env-vars GEMINI_API_KEY="AIzaSyDF6T-rQtPV9MoYibBmZiuplpvJRFS3CvU",GCP_PROJECT_ID="codenceai"
+  --set-env-vars GEMINI_API_KEY="",GCP_PROJECT_ID="codenceai"
